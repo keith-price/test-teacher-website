@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
+
+	let { teacher }: { teacher: TeacherProfile } = $props();
 
 	const currentYear = new Date().getFullYear();
 </script>

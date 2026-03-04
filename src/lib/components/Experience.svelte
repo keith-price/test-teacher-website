@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
+	import SectionHeader from './SectionHeader.svelte';
+
+	let { teacher }: { teacher: TeacherProfile } = $props();
 </script>
 
 <section class="experience section section--alt" id="experience">
 	<div class="container">
-		<span class="section-label">Experience</span>
-		<h2 class="section-title">A Global Teaching Journey</h2>
+		<SectionHeader label="Experience" title="A Global Teaching Journey" />
 		<p class="section-subtitle">
 			From volunteering in India to teaching online worldwide — two decades of dedicated ESL
 			instruction.

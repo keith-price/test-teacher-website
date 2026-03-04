@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
+	import SectionHeader from './SectionHeader.svelte';
+
+	let { teacher }: { teacher: TeacherProfile } = $props();
 </script>
 
 <section class="about section" id="about">
@@ -7,7 +10,15 @@
 		<div class="about__grid">
 			<div class="about__avatar">
 				<div class="about__avatar-placeholder">
-					<img src="/images/keith-profile.jpg" alt={teacher.name} class="about__avatar-img" />
+					<img
+						src="/images/keith-profile.jpg"
+						alt={teacher.name || 'Teacher profile photo'}
+						class="about__avatar-img"
+						width="200"
+						height="200"
+						loading="eager"
+						onerror={(e) => (e.currentTarget as HTMLElement).style.display = 'none'}
+					/>
 				</div>
 				<div class="about__avatar-badge">
 					<span>🇬🇧</span> British English
@@ -15,8 +26,7 @@
 			</div>
 
 			<div class="about__content">
-				<span class="section-label">About</span>
-				<h2 class="section-title">Meet Your Teacher</h2>
+				<SectionHeader label="About" title="Meet Your Teacher" />
 				<p class="about__bio">
 					{teacher.origin}, Keith has spent {teacher.yearsExperience} years helping students across
 					{teacher.countriesTaught.length} countries master English. Now based in {teacher.currentLocation},

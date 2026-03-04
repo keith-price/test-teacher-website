@@ -2,14 +2,14 @@
 	import type { Snippet } from 'svelte';
 
 	let {
-		href = '',
+		href = undefined,
 		target = '',
 		rel = '',
 		variant = 'default',
 		onclick,
 		children
 	}: {
-		href?: string;
+		href?: string | undefined;
 		target?: string;
 		rel?: string;
 		variant?: 'default' | 'lg';
@@ -18,7 +18,7 @@
 	} = $props();
 </script>
 
-{#if href}
+{#if href !== undefined}
 	<a
 		{href}
 		{target}

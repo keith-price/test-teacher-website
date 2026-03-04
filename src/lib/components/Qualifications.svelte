@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
+	import SectionHeader from './SectionHeader.svelte';
+
+	let { teacher }: { teacher: TeacherProfile } = $props();
 </script>
 
 <section class="qualifications section section--alt" id="qualifications">
 	<div class="container">
 		<div class="qualifications__layout">
 			<div class="qualifications__certs">
-				<span class="section-label">Qualifications</span>
-				<h2 class="section-title">Certifications</h2>
+				<SectionHeader label="Qualifications" title="Certifications" />
 
 				<div class="qualifications__list">
 					{#each teacher.certifications as cert}
@@ -31,8 +33,7 @@
 			</div>
 
 			<div class="qualifications__specialties">
-				<span class="section-label">Specialties</span>
-				<h2 class="section-title">Areas of Focus</h2>
+				<SectionHeader label="Specialties" title="Areas of Focus" />
 
 				<div class="qualifications__tags">
 					{#each teacher.specialties as specialty}

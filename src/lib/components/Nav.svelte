@@ -1,18 +1,38 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
 	import { navLinks } from '$lib/data/config';
 
+	let { teacher }: { teacher: TeacherProfile } = $props();
+
 	let mobileMenuOpen = $state(false);
+	let toggleButton: HTMLButtonElement | undefined = $state();
+	let navLinksEl: HTMLUListElement | undefined = $state();
 
 	function handleNavClick() {
 		mobileMenuOpen = false;
 	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape' && mobileMenuOpen) {
+			mobileMenuOpen = false;
+			toggleButton?.focus();
+		}
+	}
+
+	$effect(() => {
+		if (mobileMenuOpen && navLinksEl) {
+			const firstLink = navLinksEl.querySelector<HTMLAnchorElement>('a');
+			firstLink?.focus();
+		}
+	});
 
 	// TODO [AUTH]: Add auth state check to conditionally show Login/Signup or
 	//   user avatar + dashboard link. Consider accepting session data as a prop
 	//   from +layout.svelte via $page.data.
 	// TODO [CHAT]: Add an online/offline indicator dot next to the teacher name
 </script>
+
+<svelte:window onkeydown={handleKeydown} />
 
 <nav class="nav" id="nav">
 	<div class="nav__inner container">
@@ -26,13 +46,19 @@
 			aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
 			aria-expanded={mobileMenuOpen}
 			id="mobile-menu-toggle"
+			bind:this={toggleButton}
 		>
 			<span class="nav__toggle-bar" class:open={mobileMenuOpen}></span>
 			<span class="nav__toggle-bar" class:open={mobileMenuOpen}></span>
 			<span class="nav__toggle-bar" class:open={mobileMenuOpen}></span>
 		</button>
 
-		<ul class="nav__links" class:nav__links--open={mobileMenuOpen} id="nav-links">
+		<ul
+			class="nav__links"
+			class:nav__links--open={mobileMenuOpen}
+			id="nav-links"
+			bind:this={navLinksEl}
+		>
 			{#each navLinks as link}
 				<li>
 					<a href={link.href} class="nav__link" onclick={handleNavClick}>

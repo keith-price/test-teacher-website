@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
 	import Button from './Button.svelte';
+
+	let { teacher }: { teacher: TeacherProfile } = $props();
 
 	// TODO [BOOKING]: Show next available slot below the CTA button
 	//   e.g. "Next available: Tomorrow at 3:00 PM (your time)"
 	// TODO [SCHEDULING]: Replace the #contact anchor with a direct /book link or modal trigger
 
-	const stats = [
+	const stats = $derived([
 		{ value: teacher.yearsExperience, suffix: '', label: 'Years Experience' },
 		{ value: teacher.countriesTaught.length, suffix: '', label: 'Countries' },
 		{ value: teacher.totalLessons, suffix: '+', label: 'Lessons Completed' },
 		{ value: teacher.overallRating, suffix: '★', label: 'Student Rating' }
-	];
+	]);
 </script>
 
 <section class="hero" id="hero">

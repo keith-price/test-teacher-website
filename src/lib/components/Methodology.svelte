@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
+	import SectionHeader from './SectionHeader.svelte';
+
+	let { teacher }: { teacher: TeacherProfile } = $props();
 </script>
 
 <section class="methodology section" id="methodology">
 	<div class="container">
-		<span class="section-label">Teaching Method</span>
-		<h2 class="section-title">How Lessons Work</h2>
+		<SectionHeader label="Teaching Method" title="How Lessons Work" />
 		<p class="section-subtitle">
 			A proven approach built on authentic materials, structure, and active correction.
 		</p>

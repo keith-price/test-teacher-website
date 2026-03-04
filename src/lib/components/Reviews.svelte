@@ -1,25 +1,23 @@
 <script lang="ts">
-	import { teacher } from '$lib/data/teacher';
+	import type { TeacherProfile } from '$lib/data/teacher';
+	import SectionHeader from './SectionHeader.svelte';
+
+	let {
+		teacher,
+		overallStars
+	}: {
+		teacher: TeacherProfile;
+		overallStars: { full: number; half: boolean; empty: number };
+	} = $props();
 
 	// TODO [REVIEWS]: Fetch reviews dynamically from the database via +page.server.ts
 	//   - Add pagination or infinite scroll for review lists
 	//   - Consider letting students submit reviews after completed lessons
-	//   - The $derived rune below will automatically react to data changes
-
-	function getStarDisplay(score: number): { full: number; half: boolean; empty: number } {
-		const full = Math.floor(score);
-		const half = score % 1 >= 0.3 && score % 1 < 0.8;
-		const empty = 5 - full - (half ? 1 : 0);
-		return { full, half, empty };
-	}
-
-	const overallStars = $derived(getStarDisplay(teacher.overallRating));
 </script>
 
 <section class="reviews section" id="reviews">
 	<div class="container">
-		<span class="section-label">Reviews</span>
-		<h2 class="section-title">What Students Say</h2>
+		<SectionHeader label="Reviews" title="What Students Say" />
 
 		<div class="reviews__layout">
 			<div class="reviews__overall">
