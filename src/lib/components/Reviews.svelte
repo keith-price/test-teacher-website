@@ -7,7 +7,7 @@
 		overallStars
 	}: {
 		teacher: TeacherProfile;
-		overallStars: { full: number; half: boolean; empty: number };
+		overallStars: number[];
 	} = $props();
 
 	// TODO [REVIEWS]: Fetch reviews dynamically from the database via +page.server.ts
@@ -24,14 +24,11 @@
 				<div class="reviews__score">
 					<span class="reviews__score-number">{teacher.overallRating}</span>
 					<div class="reviews__score-stars">
-						{#each Array(overallStars.full) as _}
-							<span class="star star--full">★</span>
-						{/each}
-						{#if overallStars.half}
-							<span class="star star--half">★</span>
-						{/if}
-						{#each Array(overallStars.empty) as _}
-							<span class="star star--empty">★</span>
+						{#each overallStars as fillPercentage}
+							<span class="star">
+								<span class="star__empty">★</span>
+								<span class="star__fill" style="width: {fillPercentage}%">★</span>
+							</span>
 						{/each}
 					</div>
 					<span class="reviews__score-count">Based on {teacher.totalReviews} reviews</span>
@@ -99,23 +96,27 @@
 	.reviews__score-stars {
 		margin-top: var(--space-2);
 		font-size: var(--font-size-xl);
+		display: flex;
+		justify-content: center;
+		gap: 4px;
 	}
 
 	.star {
+		position: relative;
 		display: inline-block;
 	}
 
-	.star--full {
-		color: var(--color-star);
-	}
-
-	.star--half {
-		color: var(--color-star);
-		opacity: 0.5;
-	}
-
-	.star--empty {
+	.star__empty {
 		color: var(--color-border);
+	}
+
+	.star__fill {
+		position: absolute;
+		left: 0;
+		top: 0;
+		color: var(--color-star);
+		overflow: hidden;
+		white-space: nowrap;
 	}
 
 	.reviews__score-count {

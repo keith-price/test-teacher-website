@@ -1,6 +1,13 @@
-export function getStarDisplay(score: number): { full: number; half: boolean; empty: number } {
-	const full = Math.floor(score);
-	const half = score % 1 >= 0.3 && score % 1 < 0.8;
-	const empty = 5 - full - (half ? 1 : 0);
-	return { full, half, empty };
+export function getStarDisplay(score: number): number[] {
+	const stars = [];
+	for (let i = 1; i <= 5; i++) {
+		if (score >= i) {
+			stars.push(100);
+		} else if (score > i - 1) {
+			stars.push((score - (i - 1)) * 100);
+		} else {
+			stars.push(0);
+		}
+	}
+	return stars;
 }
